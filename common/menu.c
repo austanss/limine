@@ -21,6 +21,7 @@
 #include <protos/multiboot1.h>
 #include <protos/multiboot2.h>
 #include <protos/limine.h>
+#include <protos/loopback.h>
 #include <sys/cpu.h>
 
 #if defined (UEFI)
@@ -1113,6 +1114,9 @@ noreturn void boot(char *config) {
     } else if (!strcmp(proto, "efi_chainload")) {
 #endif
         chainload(config, cmdline);
+    }
+    if (!strcmp(proto, "loopback")) {
+        loopback_load(config, cmdline);
     }
 
     panic(true, "Unsupported protocol specified for kernel.");
